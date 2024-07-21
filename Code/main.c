@@ -4,33 +4,31 @@
 char chosen[10];
 int gameOn = 1;
 
-int matrix[6][7] = {
-  {0, 0, 0, 0, 0, 0, 0},
-  {0, 1, 1, 0, 1, 1, 0},
-  {0, 0, 0, 1, 0, 0, 0},
-  {1, 1, 0, 0, 1, 1, 0},
-  {0, 0, 0, 1, 1, 1, 0},
-  {3, 1, 0, 0, 0, 1, 2},
+int matrix[6*7] = {
+  0, 0, 0, 0, 0, 0, 0,
+  0, 1, 1, 0, 1, 1, 0,
+  0, 0, 0, 1, 0, 0, 0,
+  1, 1, 0, 0, 1, 1, 0,
+  0, 0, 0, 1, 1, 1, 0,
+  3, 1, 0, 0, 0, 1, 2
 };
+#define Y ((int)(positionX*(positionX/7)/positionX))
+int positionX = matrix[5]; 
+int positionY = Y;//y passa a ser uma ref
 
-int positionX = 5; 
-int positionY = 0; 
-
-void viewArray(int matrix[6][7]) {
-    for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 7; j++) {
-            if (matrix[i][j] == 1) {
+void viewArray(int (*matrix)) {
+    for (int i = 0; i < 6*7; i++){
+            if (matrix[i] == 1) {
               printf("■ ");
-            } else if (matrix[i][j] == 0) {
+            } else if (matrix[i] == 0) {
               printf("□ ");
-            } else if (matrix[i][j] == 2) {
+            } else if (matrix[i] == 2) {
               printf("☑ ");
-            } else if (matrix[i][j] == 3) {
+            } else if (matrix[i] == 3) {
               printf("X ");
             } else {
-              printf("%d ", matrix[i][j]);
+              printf("%d ", matrix[i]);
             }
-        }
         printf("\n");
     }
 }
@@ -43,26 +41,26 @@ int main() {
     printf("\nChoose where you want to go: ");
     scanf("%s", chosen);
 
-    if (strcmp(chosen, "up") == 0 && positionX > 0 && matrix[positionX - 1][positionY] == 0) {
-            matrix[positionX][positionY] = 0;
+    if (strcmp(chosen, "up") == 0 && positionX > 0 && matrix[Y] > 0) {
+            matrix[positionX] = 0;
             positionX--;
-            matrix[positionX][positionY] = 3;
+            matrix[positionX] = 3;
         } else if (strcmp(chosen, "down") == 0 && positionX < 5 && matrix[positionX + 1][positionY] == 0) {
-            matrix[positionX][positionY] = 0;
+            matrix[positionX] = 0;
             positionX++;
-            matrix[positionX][positionY] = 3;
+            matrix[positionX] = 3;
         } else if (strcmp(chosen, "left") == 0 && positionY > 0 && matrix[positionX][positionY - 1] == 0) {
-            matrix[positionX][positionY] = 0;
+            matrix[positionX] = 0;
             positionY--;
-            matrix[positionX][positionY] = 3;
+            matrix[positionX] = 3;
         } else if (strcmp(chosen, "right") == 0 && positionY < 6 && matrix[positionX][positionY + 1] == 0) {
-            matrix[positionX][positionY] = 0;
+            matrix[positionX] = 0;
             positionY++;
-            matrix[positionX][positionY] = 3;
+            matrix[positionX] = 3;
         } else if (strcmp(chosen, "down") == 0 && positionX < 5 && matrix[positionX + 1][positionY] == 2) {
-            matrix[positionX][positionY] = 0;
+            matrix[positionX] = 0;
             positionX++;
-            matrix[positionX][positionY] = 3;
+            matrix[positionX] = 3;
             break;
         }
     
